@@ -1,9 +1,13 @@
 @import 'tailwindcss';
 
+*{
+    font-family: 'Rubik', sans-serif;
+}
+
 @theme inline static {
-    --color-periwinkle: #c0bfff
-    --color-sandy: #ffa66c
-    --color-tiffany: #847e7dd
-    --color-night: #0e0e0e
-    --color-antiflash-white: #eee
+    --color-periwinkle: #c0bfff;
+    --color-sandy: #ffa66c;
+    --color-tiffany: #84e7dd;
+    --color-night: #0e0e0e;
+    --color-antiflash-white: #eee;
 }
