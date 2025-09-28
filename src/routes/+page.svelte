@@ -1,235 +1,299 @@
-<script>
-  import Lemur from "$lib/assets/lemur.svg";
-  import Pumpik from "$lib/assets/pumpik.svg";
-  import Robot from "$lib/assets/robot.svg";
-  let name = "";
-  let email = "";
-  function handleSubmit() {
-    alert(`Thanks ${name}! We'll reach out to you at ${email}.`);
-  }
+<script lang="ts">
+	import Check from '$lib/icons/Check.svelte';
+	import { enhance } from '$app/forms';
+	import type { ActionData } from './$types';
+
+	interface Props {
+		form?: ActionData;
+	}
+
+	let { form }: Props = $props();
 </script>
 
-<div class="bg-gradient-to-b from-periwinkle/30 via-antiflash-white to-sandy/20 text-night min-h-screen font-sans flex flex-col">
-  <!-- Navbar -->
-  <nav class="flex items-center justify-between px-8 py-4 shadow-md bg-white/90 backdrop-blur sticky top-0 z-50">
-    <h1 class="text-2xl font-extrabold text-sandy">Pumplo</h1>
-    <div class="flex gap-6 text-tiffany font-medium">
-      <a href="#problem" class="hover:text-sandy transition">Problem</a>
-      <a href="#solution" class="hover:text-sandy transition">Solution</a>
-      <a href="#value" class="hover:text-sandy transition">Value</a>
-      <a href="#contact" class="hover:text-sandy transition">Contact</a>
-    </div>
-    <button class="bg-sandy text-night px-4 py-2 rounded-full font-semibold hover:bg-periwinkle transition">
-      Try Free
-    </button>
-  </nav>
+<div class="bg-antiflash-white pt-32 md:py-20">
+	<div class="content grid grid-cols-1 md:grid-cols-2">
+		<div class="flex flex-col justify-center">
+			<h1 class="text-5xl font-bold text-slate-700">
+				Váš <span class="text-periwinkle">digitální trenér</span> ve vaší kapse
+			</h1>
+			<p class="mt-6 text-slate-500">
+				Pumplo vás krok za krokem provede tréninky, vytvoří personalizované tréninkové plány a udrží
+				vás motivované. Už žádné hádání - jen výsledky.
+			</p>
+			<div class="mt-6 grid grid-rows-2 gap-2">
+				<div class="flex flex-row items-center text-slate-600">
+					<div class="h-6 w-6 rounded-full bg-sandy p-1">
+						<Check />
+					</div>
+					<span class="ml-2">Personalizované tréninkové plány</span>
+				</div>
+				<div class="flex flex-row items-center text-slate-600">
+					<div class="h-6 w-6 rounded-full bg-tiffany p-1">
+						<Check />
+					</div>
+					<span class="ml-2">Podrobný návod na cvičení</span>
+				</div>
+			</div>
+			<form 
+				method="POST" 
+				action="?/createUser" 
+				use:enhance
+				class="mt-8 grid w-full grid-cols-1 sm:grid-cols-2 gap-2"
+			>
+				<div class="flex flex-col">
+					<input
+						type="text"
+						name="name"
+						value={form?.name || ''}
+						class="rounded-lg border {form?.errors?.name ? 'border-red-500' : 'border-slate-300'} px-4 py-3 focus:ring-2 focus:ring-periwinkle focus:outline-none"
+						placeholder="Zadejte své jméno"
+						required
+					/>
+					{#if form?.errors?.name}
+						<span class="text-red-500 text-sm mt-1">{form.errors.name[0]}</span>
+					{/if}
+				</div>
+				<div class="flex flex-col">
+					<input
+						type="email"
+						name="email"
+						value={form?.email || ''}
+						class="rounded-lg border {form?.errors?.email ? 'border-red-500' : 'border-slate-300'} px-4 py-3 focus:ring-2 focus:ring-periwinkle focus:outline-none"
+						placeholder="Zadejte svůj email"
+						required
+					/>
+					{#if form?.errors?.email}
+						<span class="text-red-500 text-sm mt-1">{form.errors.email[0]}</span>
+					{/if}
+				</div>
+				<button
+					type="submit"
+					class="sm:col-span-2 cursor-pointer rounded-lg border border-slate-300 bg-periwinkle px-4 py-3 transition hover:bg-tiffany text-white font-semibold"
+				>
+					Mám zájem
+				</button>
 
-  <!-- Hero Section -->
-  <section class="flex flex-col md:flex-row items-center justify-between px-10 py-20 bg-gradient-to-r from-periwinkle/40 to-sandy/40 flex-grow">
-    <div class="max-w-xl">
-      <h2 class="text-5xl font-extrabold mb-6 text-night leading-tight">
-        Your <span class="text-sandy">Digital Trainer</span> in Your Pocket
-      </h2>
-      <p class="text-lg text-tiffany mb-8">
-        Pumplo guides you step-by-step through workouts, creates personalized training plans, and keeps you motivated. No more guessing – just results.
-      </p>
-      <div class="flex flex-col md:flex-row gap-4 mb-6">
-        <div class="flex items-center gap-3 text-night">
-          <div class="w-6 h-6 bg-sandy rounded-full flex items-center justify-center text-white text-sm font-bold">✓</div>
-          <span>Personalized workout plans</span>
-        </div>
-        <div class="flex items-center gap-3 text-night">
-          <div class="w-6 h-6 bg-periwinkle rounded-full flex items-center justify-center text-white text-sm font-bold">✓</div>
-          <span>Step-by-step guidance</span>
-        </div>
-      </div>
-      <form on:submit|preventDefault={handleSubmit} class="flex flex-col md:flex-row gap-4">
-        <input
-          type="text"
-          placeholder="Your Name"
-          bind:value={name}
-          class="px-4 py-3 rounded-full border border-periwinkle/40 focus:outline-none focus:ring-2 focus:ring-periwinkle"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Your Email"
-          bind:value={email}
-          class="px-4 py-3 rounded-full border border-sandy/40 focus:outline-none focus:ring-2 focus:ring-sandy"
-          required
-        />
-        <button type="submit" class="bg-night text-white font-semibold px-6 py-3 rounded-full hover:bg-sandy hover:text-night transition">
-          Start Free
-        </button>
-      </form>
-    </div>
-    <img
-      src={Robot}
-      alt="digital trainer robot"
-      class="w-72 mt-10 md:mt-0 animate-fade-in"
-    />
-  </section>
-
-  <!-- Problem Section -->
-  <section id="problem" class="px-10 py-20 text-center bg-gradient-to-b from-antiflash-white to-periwinkle/10">
-    <h2 class="text-4xl font-extrabold mb-12 text-night">1⃣ The Problem</h2>
-    <div class="max-w-4xl mx-auto">
-      <div class="text-6xl font-black text-sandy mb-6">50%</div>
-      <p class="text-2xl text-night mb-12 font-semibold">of new gym members quit within the first 6 months</p>
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="rounded-3xl shadow-lg p-8 bg-white/80 hover:scale-105 transition border border-sandy/30">
-          <div class="text-4xl mb-4">😕</div>
-          <h3 class="font-bold text-xl mb-3 text-sandy">Lack of Guidance</h3>
-          <p class="text-night">Members don't know how to exercise properly, leading to poor results and lost motivation.</p>
-        </div>
-        <div class="rounded-3xl shadow-lg p-8 bg-white/80 hover:scale-105 transition border border-periwinkle/30">
-          <div class="text-4xl mb-4">📉</div>
-          <h3 class="font-bold text-xl mb-3 text-periwinkle">No Results</h3>
-          <p class="text-night">Without proper technique and programming, clients don't see progress and give up.</p>
-        </div>
-        <div class="rounded-3xl shadow-lg p-8 bg-white/80 hover:scale-105 transition border border-tiffany/30">
-          <div class="text-4xl mb-4">⚖️</div>
-          <h3 class="font-bold text-xl mb-3 text-tiffany">Unfair Competition</h3>
-          <p class="text-night">Small and medium gyms can't compete with corporate chains and their digital tools.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Solution Section -->
-  <section id="solution" class="px-10 py-20 text-center bg-gradient-to-r from-sandy/20 to-periwinkle/20">
-    <h2 class="text-4xl font-extrabold mb-12 text-night">2⃣ The Solution</h2>
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col md:flex-row items-center justify-between mb-16">
-        <div class="max-w-2xl text-left">
-          <h3 class="text-3xl font-bold mb-6 text-sandy">Your Digital Trainer in Your Pocket</h3>
-          <p class="text-lg text-night mb-8">
-            Pumplo guides users step-by-step through their workouts. From personalized questionnaire to individual training plan to direct machine instructions.
-          </p>
-          <div class="space-y-4">
-            <div class="flex items-start gap-4">
-              <div class="w-8 h-8 bg-periwinkle rounded-full flex items-center justify-center text-white font-bold">1</div>
-              <div>
-                <h4 class="font-semibold text-night">Questionnaire</h4>
-                <p class="text-tiffany">Tell us about your goals and experience</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-8 h-8 bg-sandy rounded-full flex items-center justify-center text-white font-bold">2</div>
-              <div>
-                <h4 class="font-semibold text-night">Individual Plan</h4>
-                <p class="text-tiffany">Get a workout plan tailored just for you</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-8 h-8 bg-periwinkle rounded-full flex items-center justify-center text-white font-bold">3</div>
-              <div>
-                <h4 class="font-semibold text-night">Machine Instructions</h4>
-                <p class="text-tiffany">Step-by-step guidance with weight, technique, and error corrections</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flex flex-col items-center gap-8 mt-10 md:mt-0">
-          <img src={Lemur} alt="guidance mascot" class="w-48 transition-transform hover:scale-110" />
-          <img src={Pumpik} alt="progress mascot" class="w-32 transition-transform hover:scale-110" />
-        </div>
-      </div>
-      
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="rounded-3xl shadow-lg p-8 bg-white/90 border border-sandy/40">
-          <div class="text-4xl mb-4">🎮</div>
-          <h3 class="font-bold text-xl mb-3 text-sandy">Gamification & Feedback</h3>
-          <p class="text-night">Regular progress tracking and motivational features keep users engaged and coming back.</p>
-        </div>
-        <div class="rounded-3xl shadow-lg p-8 bg-white/90 border border-periwinkle/40">
-          <div class="text-4xl mb-4">🆓</div>
-          <h3 class="font-bold text-xl mb-3 text-periwinkle">Free for Gyms</h3>
-          <p class="text-night">Gyms get the complete solution free in the basic version, with no hardware investment required.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Unique Value Section -->
-  <section id="value" class="px-10 py-20 bg-gradient-to-b from-periwinkle/10 to-antiflash-white">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-4xl font-extrabold mb-12 text-center text-night">3⃣ Unique Value</h2>
-      
-      <div class="grid md:grid-cols-2 gap-12 mb-16">
-        <div class="space-y-8">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-sandy rounded-xl flex items-center justify-center text-white text-xl">📈</div>
-            <div>
-              <h3 class="text-xl font-bold mb-2 text-sandy">Higher Retention</h3>
-              <p class="text-night">Digital guidance, progress tracking, and motivation can increase gym client retention by tens of percent.</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-periwinkle rounded-xl flex items-center justify-center text-white text-xl">🆓</div>
-            <div>
-              <h3 class="text-xl font-bold mb-2 text-periwinkle">Free / Low Barrier</h3>
-              <p class="text-night">Basic version free, premium features for a fee, but core value is immediately available.</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="space-y-8">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-tiffany rounded-xl flex items-center justify-center text-white text-xl">✨</div>
-            <div>
-              <h3 class="text-xl font-bold mb-2 text-tiffany">Simple UX</h3>
-              <p class="text-night">Minimal barriers: no QR/NFC codes, machine recognition by photos, hand-by-hand guidance.</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-sandy rounded-xl flex items-center justify-center text-white text-xl">🤝</div>
-            <div>
-              <h3 class="text-xl font-bold mb-2 text-sandy">Win-Win Solution</h3>
-              <p class="text-night">Users improve their fitness, gyms get valuable data and growth tools.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- CTA Section -->
-      <div class="text-center bg-gradient-to-r from-sandy/20 to-periwinkle/20 rounded-3xl p-12">
-        <h3 class="text-3xl font-bold mb-6 text-night">Ready to Transform Your Gym Experience?</h3>
-        <p class="text-lg text-tiffany mb-8 max-w-2xl mx-auto">
-          Join thousands of users who are already achieving better results with personalized digital training.
-        </p>
-        <div class="flex flex-col md:flex-row gap-4 justify-center">
-          <button class="bg-sandy text-night px-8 py-4 rounded-full font-bold text-lg hover:bg-periwinkle transition hover:scale-105">
-            🎯 Start Your Free Trial
-          </button>
-          <button class="border-2 border-night text-night px-8 py-4 rounded-full font-bold text-lg hover:bg-night hover:text-white transition">
-            🏋️ For Gym Owners
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer id="contact" class="px-10 py-10 bg-night text-center mt-auto">
-    <div class="flex justify-center items-center gap-4 mb-4">
-      <img src={Robot} alt="Pumplo robot" class="w-8 h-8" />
-      <span class="text-xl font-bold text-sandy">Pumplo</span>
-    </div>
-    <p class="text-sm text-antiflash-white">© 2025 Pumplo. Your digital trainer in your pocket.</p>
-  </footer>
+				{#if form?.success}
+					<div class="sm:col-span-2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+						{form.message}
+					</div>
+				{:else if form?.error}
+					<div class="sm:col-span-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+						{form.message}
+					</div>
+				{/if}
+			</form>
+		</div>
+		<img src="/pumpik.svg" alt="Pumpík maskot" class="px-30 sm:px-52 py-10 md:px-0 md:py-0 md:pl-40 mx-auto" />
+	</div>
 </div>
-
-<style>
-  .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-</style>
+<div id="problem" class="bg-antiflash-white py-20">
+	<div class="content">
+		<p class="text-md text-center font-semibold text-slate-500">až</p>
+		<h2 class="text-center text-8xl font-bold text-sandy">50%</h2>
+		<p class="text-center text-2xl font-bold text-slate-600">
+			nových členů posilovny odchází během prvních 6 měsíců
+		</p>
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+			<div
+				class="mt-8 w-full rounded-lg border border-sandy bg-sandy/10 p-6 text-center shadow-md transition hover:scale-105"
+			>
+				<p class="text-3xl">😕</p>
+				<p class="mt-2 text-xl font-bold text-sandy">Nedostatek vedení</p>
+				<p class="mt-2 text-slate-700">
+					Členové nevědí, jak správně cvičit, což vede ke špatným výsledkům a ztrátě motivace.
+				</p>
+			</div>
+			<div
+				class="md:mt-8 w-full rounded-lg border border-tiffany bg-tiffany/10 p-6 text-center shadow-md transition hover:scale-105"
+			>
+				<p class="text-3xl">📉</p>
+				<p class="mt-2 text-xl font-bold text-tiffany">Žádné výsledky</p>
+				<p class="mt-2 text-slate-700">
+					Bez správné techniky a přístupu klienti nevidí pokrok a vzdávají to.
+				</p>
+			</div>
+			<div
+				class="md:mt-8 w-full rounded-lg border border-periwinkle bg-periwinkle/10 p-6 text-center shadow-md transition hover:scale-105"
+			>
+				<p class="text-3xl">⚖️</p>
+				<p class="mt-2 text-xl font-bold text-periwinkle">Nekalá soutěž</p>
+				<p class="mt-2 text-slate-700">
+					Malé a střední posilovny nemohou konkurovat korporátním řetězcům a jejich digitálním
+					nástrojům.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="reseni" class="bg-gradient-to-r from-sandy/40 to-periwinkle/40 py-20">
+	<div class="content">
+		<h2 class="text-center text-4xl font-bold text-slate-700">Naše řešení</h2>
+		<div class="grid w-full grid-cols-1 md:grid-cols-3 items-center gap-x-20">
+			<div class="row-start-2 md:row-start-1">
+				<img src="/lemur.svg" alt="Lemur maskot" class="px-24 sm:px-52 py-10 md:px-0 md:py-0 mx-auto" />
+			</div>
+			<div class="md:col-span-2 mt-6">
+				<h3 class="text-3xl font-semibold text-sandy">Váš digitální trenér ve vaší kapse</h3>
+				<p class="mt-6 text-slate-700">
+					Pumplo provede uživatele krok za krokem jejich tréninkem. Od personalizovaného dotazníku
+					přes individuální tréninkový plán až po přímé pokyny ke stroji.
+				</p>
+				<div class="mt-8 w-fit">
+					<div class="mt-4 flex w-fit flex-row gap-3">
+						<div
+							class="mt-1.5 flex aspect-square h-8 w-8 items-center justify-center rounded-full bg-periwinkle"
+						>
+							<p class="font-bold text-antiflash-white">1</p>
+						</div>
+						<div>
+							<p class="text-lg font-semibold text-slate-800">Dotazník</p>
+							<p class="text-slate-700">Řekněte nám o svých cílech a zkušenostech</p>
+						</div>
+					</div>
+					<div class="mt-4 flex flex-row gap-3">
+						<div
+							class="mt-1.5 flex aspect-square h-8 w-8 items-center justify-center rounded-full bg-sandy"
+						>
+							<p class="font-bold text-antiflash-white">2</p>
+						</div>
+						<div>
+							<p class="text-lg font-semibold text-slate-800">Individuální plán</p>
+							<p class="text-slate-700">Získejte tréninkový plán na míru přímo pro vás</p>
+						</div>
+					</div>
+					<div class="mt-4 flex flex-row gap-3">
+						<div
+							class="mt-1.5 flex aspect-square h-8 w-8 items-center justify-center rounded-full bg-periwinkle"
+						>
+							<p class="font-bold text-antiflash-white">3</p>
+						</div>
+						<div>
+							<p class="text-lg font-semibold text-slate-800">Strojní instrukce</p>
+							<p class="text-slate-700">Podrobný návod s váhy, techniky a opravami chyb</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+			<div
+				class="sm:mt-8 w-full rounded-lg bg-white p-6 text-center shadow-md transition hover:scale-105"
+			>
+				<p class="text-3xl">🎮</p>
+				<p class="mt-2 text-xl font-bold text-sandy">Gamifikace a zpětná vazba</p>
+				<p class="mt-2 text-slate-700">
+					Pravidelné sledování pokroku a motivační funkce udržují uživatele v kontaktu a pomáhají
+					jim vracet se.
+				</p>
+			</div>
+			<div
+				class="sm:mt-8 w-full rounded-lg bg-white p-6 text-center shadow-md transition hover:scale-105"
+			>
+				<p class="text-3xl">🆓</p>
+				<p class="mt-2 text-xl font-bold text-periwinkle">Zdarma pro posilovny</p>
+				<p class="mt-2 text-slate-700">
+					Posilovny získají kompletní řešení zdarma v základní verzi, bez nutnosti investice do
+					hardwaru.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="hodnota" class="bg-antiflash-white py-20">
+	<div class="content">
+		<h2 class="text-center text-4xl font-bold text-slate-700">Jedinečná hodnota</h2>
+		<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-8">
+			<div class="mt-4 flex flex-row gap-3">
+				<div
+					class="mt-1.5 flex aspect-square h-10 w-10 items-center justify-center rounded-lg bg-sandy"
+				>
+					<p class="font-bold text-antiflash-white">📈</p>
+				</div>
+				<div>
+					<p class="text-xl font-semibold text-sandy">Vyšší retence</p>
+					<p class="text-slate-700">
+						Digitální poradenství, sledování pokroku a motivace mohou zvýšit udržení klientů v
+						posilovně o desítky procent.
+					</p>
+				</div>
+			</div>
+			<div class="mt-4 flex flex-row gap-3">
+				<div
+					class="mt-1.5 flex aspect-square h-10 w-10 items-center justify-center rounded-lg bg-periwinkle"
+				>
+					<p class="font-bold text-antiflash-white">✨</p>
+				</div>
+				<div>
+					<p class="text-xl font-semibold text-periwinkle">Jednoduché UX</p>
+					<p class="text-slate-700">
+						Minimální bariéry: žádné QR/NFC kódy, rozpoznávání stroje podle fotografií, navádění z
+						ruky do ruky.
+					</p>
+				</div>
+			</div>
+			<div class="mt-4 flex flex-row gap-3">
+				<div
+					class="mt-1.5 flex aspect-square h-10 w-10 items-center justify-center rounded-lg bg-periwinkle"
+				>
+					<p class="font-bold text-antiflash-white">🆓</p>
+				</div>
+				<div>
+					<p class="text-xl font-semibold text-periwinkle">Zdarma / Nízká bariéra</p>
+					<p class="text-slate-700">
+						Základní verze zdarma, prémiové funkce za poplatek, ale základní hodnota je k dispozici
+						okamžitě.
+					</p>
+				</div>
+			</div>
+			<div class="mt-4 flex flex-row gap-3">
+				<div
+					class="mt-1.5 flex aspect-square h-10 w-10 items-center justify-center rounded-lg bg-sandy"
+				>
+					<p class="font-bold text-antiflash-white">🤝</p>
+				</div>
+				<div>
+					<p class="text-xl font-semibold text-sandy">Win-Win řešení</p>
+					<p class="text-slate-700">
+						Uživatelé si zlepšují kondici, posilovny získávají cenná data a nástroje pro růst.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="bg-antiflash-white pb-20">
+	<div class="content">
+        <div class="p-8 w-full bg-gradient-to-r from-sandy to-periwinkle rounded-lg">
+            <h2 class="text-center text-2xl font-bold text-slate-700">Pomozte utvářet budoucnost aplikací pro posilovny</h2>
+            <p class="text-center text-slate-600">Zatím je to jen koncept - přidejte se na čekací listinu a dejte nám vědět, že byste o takovou aplikaci stáli.</p>
+            <form class="mt-8 grid w-full grid-cols-1 sm:grid-cols-2 gap-2">
+				<input
+					type="text"
+					class="rounded-lg bg-antiflash-white px-4 py-3 focus:ring-2 focus:ring-tiffany focus:outline-none"
+					placeholder="Zadejte své jméno"
+				/>
+				<input
+					type="text"
+					class="rounded-lg bg-antiflash-white px-4 py-3 focus:ring-2 focus:ring-tiffany focus:outline-none"
+					placeholder="Zadejte svůj email"
+				/>
+				<button
+					type="submit"
+					class="sm:col-span-2 cursor-pointer rounded-lg bg-tiffany px-4 py-3 transition hover:bg-periwinkle"
+					>Mám zájem</button
+				>
+			</form>
+        </div>
+	</div>
+</div>
+<footer class="bg-night py-6">
+    <div class="content flex flex-col items-center justify-center">
+        <a href="/" class="flex flex-row items-center gap-2">
+			<img src="/logo.svg" alt="Pumplo logo" class="h-10 w-auto" />
+			<span class="text-xl font-bold text-antiflash-white">Pumplo</span>
+		</a>
+        <p class="text-antiflash-white text-sm mt-4">© 2025 Pumplo. Your digital trainer in your pocket.</p>
+        <a href="https://em1t.me" target="_blank" rel="noreferrer" class="text-periwinkle hover:text-tiffany mt-4">Made with ❤️ by Em1t</a>
+    </div>
+</footer>
