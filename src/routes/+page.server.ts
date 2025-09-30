@@ -5,8 +5,8 @@ import { z } from 'zod';
 
 // Validation schema
 const userSchema = z.object({
-	name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
-	email: z.string().email('Invalid email address')
+	name: z.string().min(1, 'Jméno je povinné').max(100, 'Jméno musí být kratší než 100 znaků'),
+	email: z.string().email('Neplatná e-mailová adresa')
 });
 
 export const actions: Actions = {
@@ -21,7 +21,7 @@ export const actions: Actions = {
 		if (!validationResult.success) {
 			return fail(400, {
 				error: true,
-				message: 'Validation failed',
+				message: 'Ověření selhalo',
 				errors: validationResult.error.flatten().fieldErrors
 			});
 		}
@@ -30,21 +30,21 @@ export const actions: Actions = {
 
 		try {
 			// Check if user with this email already exists
-			const existingUser = await prisma.user.findUnique({
+			const existingUser = await prisma.waitList.findUnique({
 				where: { email: validatedEmail }
 			});
 
 			if (existingUser) {
 				return fail(400, {
 					error: true,
-					message: 'A user with this email already exists',
+					message: 'Uživatel s touto e-mailovou adresou již existuje',
 					name: validatedName,
 					email: validatedEmail
 				});
 			}
 
 			// Create new user
-			const user = await prisma.user.create({
+			const user = await prisma.waitList.create({
 				data: {
 					name: validatedName,
 					email: validatedEmail
@@ -53,7 +53,7 @@ export const actions: Actions = {
 
 			return {
 				success: true,
-				message: 'User created successfully!',
+				message: 'Úspěšně jste se zapsali do čekací listiny!',
 				user: {
 					id: user.id,
 					name: user.name,
@@ -64,7 +64,7 @@ export const actions: Actions = {
 			console.error('Database error:', error);
 			return fail(500, {
 				error: true,
-				message: 'Failed to create user. Please try again.',
+				message: 'Při registraci do čekací listiny došlo k chybě. Zkuste to prosím znovu.',
 				name: validatedName,
 				email: validatedEmail
 			});
