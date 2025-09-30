@@ -85,7 +85,7 @@
 	</script>`}
 </svelte:head>
 
-<main class="bg-antiflash-white py-20">
+<main class="bg-antiflash-white py-6 md:py-20">
 	<section class="content grid grid-cols-1 md:grid-cols-2">
 		<article class="flex flex-col justify-center">
 			<h1 class="text-5xl font-bold text-slate-700">
@@ -360,7 +360,7 @@
 		</div>
 	</div>
 </section>
-<section class="bg-antiflash-white pb-20" aria-labelledby="cta-heading">
+<section class="bg-antiflash-white pb-20" id="cta" aria-labelledby="cta-heading">
 	<div class="content">
         <div class="p-8 w-full bg-gradient-to-r from-sandy to-periwinkle rounded-lg">
             <header class="text-center mb-8">

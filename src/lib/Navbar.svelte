@@ -30,7 +30,7 @@
 			</ul>
 		</nav>
 		<a
-			href="/waitlist"
+			href="#cta"
 			class="rounded-lg bg-periwinkle px-4 py-2 font-semibold text-slate-700 transition hover:bg-tiffany text-nowrap"
 		>
 			Mám zájem
