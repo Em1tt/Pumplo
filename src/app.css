@@ -4,10 +4,14 @@
     font-family: 'Rubik', sans-serif;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 @theme inline static {
-    --color-periwinkle: #c0bfff;
-    --color-sandy: #ffa66c;
-    --color-tiffany: #84e7dd;
+    --color-periwinkle: #6562ff;
+    --color-sandy: #ff812e;
+    --color-tiffany: #45ee91ff;
     --color-night: #0e0e0e;
     --color-antiflash-white: #eee;
 }

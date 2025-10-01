@@ -97,13 +97,13 @@
 			</p>
 			<div class="mt-6 grid grid-rows-2 gap-2">
 				<div class="flex flex-row items-center text-slate-600">
-					<div class="h-6 w-6 rounded-full bg-sandy p-1">
+					<div class="h-6 w-6 rounded-full text-slate-200 bg-sandy p-1">
 						<Check />
 					</div>
 					<span class="ml-2">Personalizované tréninkové plány</span>
 				</div>
 				<div class="flex flex-row items-center text-slate-600">
-					<div class="h-6 w-6 rounded-full bg-tiffany p-1">
+					<div class="h-6 w-6 rounded-full text-slate-200 bg-periwinkle p-1">
 						<Check />
 					</div>
 					<span class="ml-2">Podrobný návod na cvičení</span>
@@ -364,8 +364,8 @@
 	<div class="content">
         <div class="p-8 w-full bg-gradient-to-r from-sandy to-periwinkle rounded-lg">
             <header class="text-center mb-8">
-				<h2 id="cta-heading" class="text-2xl font-bold text-slate-700">Pomozte utvářet budoucnost aplikací pro posilovny</h2>
-				<p class="text-slate-600">Zatím je to jen koncept - přidejte se na čekací listinu a dejte nám vědět, že byste o takovou aplikaci stáli.</p>
+				<h2 id="cta-heading" class="text-2xl font-bold text-slate-100">Pomozte utvářet budoucnost aplikací pro posilovny</h2>
+				<p class="text-slate-200">Zatím je to jen koncept - přidejte se na čekací listinu a dejte nám vědět, že byste o takovou aplikaci stáli.</p>
 			</header>
             <form 
 				method="POST" 
@@ -414,7 +414,7 @@
 				</div>
 				<button
 					type="submit"
-					class="sm:col-span-2 cursor-pointer rounded-lg border border-slate-300 bg-tiffany px-4 py-3 transition hover:bg-periwinkle text-white font-semibold"
+					class="sm:col-span-2 cursor-pointer rounded-lg bg-tiffany px-4 py-3 transition hover:bg-periwinkle hover:brightness-115 text-white font-semibold"
 					aria-describedby="bottom-submit-description"
 				>
 					Mám zájem
